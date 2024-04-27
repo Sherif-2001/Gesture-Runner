@@ -1,10 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class SpawnManager : MonoBehaviour
 {
     [SerializeField] GameObject[] obstaclesPrefabs;
+    [SerializeField] TextMeshProUGUI obstacleText;
 
     float delayTime = 3f;
     float repeatRate = 10f;
@@ -25,7 +27,16 @@ public class SpawnManager : MonoBehaviour
         GameObject randomObstacle = obstaclesPrefabs[Random.Range(0, obstaclesPrefabs.Length)];
         randomObstacle.transform.position = new Vector3(OutsideCameraViewX(), randomObstacle.transform.position.y, randomObstacle.transform.position.z);
         Instantiate(randomObstacle);
+        StartCoroutine(ShowObstacleWarning(randomObstacle));
+    }
 
+    IEnumerator ShowObstacleWarning(GameObject obstacle)
+    {
+        obstacleText.gameObject.SetActive(true);
+        obstacleText.text = $"Incoming....\n{obstacle.name}".ToUpper();
+        yield return new WaitForSeconds(5);
+
+        obstacleText.gameObject.SetActive(false);
     }
 
     /// <summary>
