@@ -9,6 +9,9 @@ public class PlayerScript : MonoBehaviour
     Color coolColor = new Color(0.2985047f, 0.3668804f, 0.8113208f);
     Color burnColor = new Color(0.3433962f, 0.3129441f, 0.3129441f);
 
+    [SerializeField] List<GameObject> livesObjects;
+    int lives = 3;
+
     private void Start()
     {
         renderer = gameObject.GetComponent<SpriteRenderer>();
@@ -16,18 +19,27 @@ public class PlayerScript : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
+        if (lives <= 1)
+        {
+            StartCoroutine(Die());
+            return;
+        }
+
+        lives--;
+        livesObjects[lives].GetComponent<SpriteRenderer>().color = Color.black;
+
         if (other.gameObject.CompareTag("Ice"))
         {
-            StartCoroutine(CoolPlayer());
+            StartCoroutine(Cool());
         }
         else if (other.gameObject.CompareTag("Fire"))
         {
-            StartCoroutine(BurnPlayer());
+            StartCoroutine(Burn());
 
         }
     }
 
-    IEnumerator CoolPlayer()
+    IEnumerator Cool()
     {
         renderer.color = coolColor;
 
@@ -37,7 +49,7 @@ public class PlayerScript : MonoBehaviour
 
     }
 
-    IEnumerator BurnPlayer()
+    IEnumerator Burn()
     {
         renderer.color = burnColor;
 
@@ -45,5 +57,11 @@ public class PlayerScript : MonoBehaviour
 
         renderer.color = Color.white;
 
+    }
+
+    IEnumerator Die()
+    {
+        Debug.Log("Died");
+        yield return null;
     }
 }

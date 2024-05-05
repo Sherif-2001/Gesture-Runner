@@ -5,8 +5,8 @@ using TMPro;
 
 public class ScoreManager : MonoBehaviour
 {
-    [SerializeField] TextMeshProUGUI scoreText;
-    float score = 0;
+    [SerializeField] TextMeshProUGUI timeText;
+    float time = 0;
 
 
     /// <summary>
@@ -14,8 +14,8 @@ public class ScoreManager : MonoBehaviour
     /// </summary>
     void Update()
     {
-        score += Time.deltaTime * 60;
-        scoreText.text = "Score\n" + Mathf.Round(score);
+        time += Time.deltaTime;
+        timeText.text = "Score\n" + Mathf.Round(time);
     }
 
 }

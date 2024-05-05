@@ -6,6 +6,12 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
+    path: Assets/Scenes/Main Menu.unity
+    guid: b437e53abc56c244ead08c4acb48693b
+  - enabled: 1
+    path: Assets/Scenes/Glove Callibration.unity
+    guid: f541bd9f68bfc2f4dbdbbf96fcdcc870
+  - enabled: 1
     path: Assets/Scenes/Game.unity
     guid: 2cda990e2423bbf4892e6590ba056729
   m_configObjects: {}
