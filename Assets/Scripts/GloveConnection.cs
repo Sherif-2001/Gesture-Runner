@@ -221,10 +221,13 @@ public class GloveConnection : MonoBehaviour
 
     IEnumerator StartCallibration()
     {
-        isCalibratingOpen = true;
 
         callibrationText.SetText("Open your hand");
         callibrationPanel.SetActive(true);
+
+        yield return new WaitForSeconds(3);
+        isCalibratingOpen = true;
+
 
         yield return new WaitForSeconds(5);
         isCalibratingOpen = false;
@@ -281,11 +284,14 @@ public class GloveConnection : MonoBehaviour
                 Debug.Log($"mode4: {mode4}");
                 Debug.Log($"mode5: {mode5}"); */
 
-        isCalibratingClose = true;
 
         callibrationText.SetText("Close your hand");
         openHandImage.SetActive(false);
         closedHandImage.SetActive(true);
+
+        yield return new WaitForSeconds(3);
+        isCalibratingClose = true;
+
 
         yield return new WaitForSeconds(5);
         isCalibratingClose = false;
