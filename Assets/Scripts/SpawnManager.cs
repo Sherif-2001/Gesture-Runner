@@ -33,7 +33,9 @@ public class SpawnManager : MonoBehaviour
     IEnumerator ShowObstacleWarning(GameObject obstacle)
     {
         obstacleText.gameObject.SetActive(true);
-        obstacleText.text = $"Incoming....\n{obstacle.name}".ToUpper();
+        obstacleText.text = $"{obstacle.name} Incoming".ToUpper();
+
+        obstacleText.color = obstacle.CompareTag("Fire") ? Color.red : Color.blue;
         yield return new WaitForSeconds(5);
 
         obstacleText.gameObject.SetActive(false);

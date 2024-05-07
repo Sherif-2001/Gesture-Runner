@@ -11,20 +11,16 @@ using System.Linq;
 
 public class GloveConnection : MonoBehaviour
 {
-    SerialPort stream = new SerialPort("COM6", 9600);
+    SerialPort stream;
 
     [SerializeField] TextMeshProUGUI warningText;
 
     GloveCallibration gloveCallibration;
 
-    //public string strReceived;
-    //private string[] strData = new string[5];
-
-    //private int[] sensorData = new int[5]; // Array to hold sensor data vectors
-
     private void Start()
     {
         gloveCallibration = GetComponentInParent<GloveCallibration>();
+        stream = gloveCallibration.stream;
     }
 
 
@@ -39,12 +35,12 @@ public class GloveConnection : MonoBehaviour
         try
         {
             stream.Open();
-
+            stream.ReadTimeout = 50;
             StartCoroutine(gloveCallibration.StartCallibration());
         }
-        catch
+        catch (Exception e)
         {
-            StartCoroutine(ShowWarning("Serial Port Not Connected"));
+            StartCoroutine(ShowWarning("Serial Port Error: " + e.Message));
         }
     }
 
@@ -58,6 +54,14 @@ public class GloveConnection : MonoBehaviour
 
         warningText.gameObject.SetActive(false);
 
+    }
+
+    void OnDestroy()
+    {
+        if (stream != null && stream.IsOpen)
+        {
+            stream.Close();
+        }
     }
 
 }

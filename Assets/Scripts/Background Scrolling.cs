@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class BackgroundScrolling : MonoBehaviour
 {
-    public float speedx = 1f;
+    public float speedx = 0.5f;
     RawImage backgroundImage;
 
     private void Start()
