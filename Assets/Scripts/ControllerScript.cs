@@ -54,7 +54,7 @@ public class ControllerScript : MonoBehaviour
         {
             try
             {
-                StreamSetup();
+                GetStreamData();
                 CheckHandGesture();
             }
             catch (Exception e)
@@ -73,7 +73,6 @@ public class ControllerScript : MonoBehaviour
             DestroyObstacles("Fire");
         }
     }
-
 
     void DestroyObstacles(string tag)
     {
@@ -94,7 +93,7 @@ public class ControllerScript : MonoBehaviour
         }
     }
 
-    void StreamSetup()
+    void GetStreamData()
     {
         strReceived = stream.ReadLine();
         strData = strReceived.Split(',');
@@ -148,6 +147,7 @@ public class ControllerScript : MonoBehaviour
             }
         }
     }
+
     void OnDestroy()
     {
         if (stream != null && stream.IsOpen)

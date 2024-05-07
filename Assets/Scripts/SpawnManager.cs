@@ -2,11 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using UnityEngine.UI;
 
 public class SpawnManager : MonoBehaviour
 {
     [SerializeField] GameObject[] obstaclesPrefabs;
-    [SerializeField] TextMeshProUGUI obstacleText;
+    //[SerializeField] TextMeshProUGUI obstacleText;
+    [SerializeField] Image obstacleImage;
+    [SerializeField] GameObject obstacleMessage;
+    [SerializeField] Sprite[] obstaclesSprites;
 
     float delayTime = 3f;
     float repeatRate = 10f;
@@ -32,13 +36,18 @@ public class SpawnManager : MonoBehaviour
 
     IEnumerator ShowObstacleWarning(GameObject obstacle)
     {
-        obstacleText.gameObject.SetActive(true);
-        obstacleText.text = $"{obstacle.name} Incoming".ToUpper();
+        obstacleMessage.SetActive(true);
 
+        TextMeshProUGUI obstacleText = obstacleMessage.GetComponentInChildren<TextMeshProUGUI>();
+
+        obstacleText.text = $"{obstacle.name} Incoming".ToUpper();
         obstacleText.color = obstacle.CompareTag("Fire") ? Color.red : Color.blue;
+
+        obstacleImage.sprite = obstaclesSprites[obstacle.CompareTag("Fire") ? 1 : 0];
+
         yield return new WaitForSeconds(5);
 
-        obstacleText.gameObject.SetActive(false);
+        obstacleMessage.SetActive(false);
     }
 
     /// <summary>

@@ -24,20 +24,21 @@ public class GloveCallibration : MonoBehaviour
     LinkedList<int>[] fingersClose = new LinkedList<int>[5];
 
     private double[] openAverage = new double[5];
-    private double[] closeAverage = new double[5];
-    private double[] openMode = new double[5];
-    private double[] closeMode = new double[5];
+    //private double[] closeAverage = new double[5];
+    //private double[] openMode = new double[5];
+    //private double[] closeMode = new double[5];
     private double[] sensors_difference = new double[5];
-    private double[] sensors_mapping = new double[5];
+    //private double[] sensors_mapping = new double[5];
 
 
     private bool isCalibratingOpen = false;
-    private bool isCalibratingClose = false;
+    //private bool isCalibratingClose = false;
     private bool isMappinng = false;
 
+    [SerializeField] GameObject callibrationPanel;
     [SerializeField] TextMeshProUGUI callibrationText;
     [SerializeField] GameObject openHandImage;
-    [SerializeField] GameObject callibrationPanel;
+    //[SerializeField] GameObject closedHandImage;
 
 
     void Start()
@@ -49,10 +50,6 @@ public class GloveCallibration : MonoBehaviour
             fingersClose[i] = new LinkedList<int>();
         }
     }
-
-    //public Transform hand, index, middle, ring, pinky, thumb;
-
-
 
     void Update()
     {
@@ -81,14 +78,14 @@ public class GloveCallibration : MonoBehaviour
                         fingersOpen[i].AddLast(sensorData[i]);
                     }
                 }
-                if (isCalibratingClose)
-                {
-                    // store Open values
-                    for (int i = 0; i < 5; i++)
-                    {
-                        fingersClose[i].AddLast(sensorData[i]);
-                    }
-                }
+                //if (isCalibratingClose)
+                //{
+                //    // store Open values
+                //    for (int i = 0; i < 5; i++)
+                //    {
+                //        fingersClose[i].AddLast(sensorData[i]);
+                //    }
+                //}
 
                 if (isMappinng)
                 {
@@ -192,8 +189,8 @@ public class GloveCallibration : MonoBehaviour
         //PlayerPrefs.Save();
 
 
-        callibrationText.SetText("Thank you! Glove is Callibrated");
         openHandImage.SetActive(false);
+        callibrationText.SetText("Thank you! Glove is Calibrated");
 
         // start mapping
         isMappinng = true;
