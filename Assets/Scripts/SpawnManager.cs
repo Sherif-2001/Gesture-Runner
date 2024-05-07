@@ -20,7 +20,7 @@ public class SpawnManager : MonoBehaviour
     /// </summary>
     void Start()
     {
-        InvokeRepeating(nameof(SpawnObstacle), delayTime, repeatRate);
+        Invoke(nameof(SpawnObstacle), delayTime);
     }
 
     /// <summary>
@@ -32,6 +32,10 @@ public class SpawnManager : MonoBehaviour
         randomObstacle.transform.position = new Vector3(OutsideCameraViewX(), randomObstacle.transform.position.y, randomObstacle.transform.position.z);
         Instantiate(randomObstacle);
         StartCoroutine(ShowObstacleWarning(randomObstacle));
+
+        repeatRate *= 0.95f;
+        print(repeatRate);
+        Invoke(nameof(SpawnObstacle), repeatRate);
     }
 
     IEnumerator ShowObstacleWarning(GameObject obstacle)
@@ -41,7 +45,7 @@ public class SpawnManager : MonoBehaviour
         TextMeshProUGUI obstacleText = obstacleMessage.GetComponentInChildren<TextMeshProUGUI>();
 
         obstacleText.text = $"{obstacle.name} Incoming".ToUpper();
-        obstacleText.color = obstacle.CompareTag("Fire") ? Color.red : Color.blue;
+        obstacleText.color = obstacle.CompareTag("Fire") ? new Color(0.7433963f, 0.009818403f, 0.009818403f) : Color.blue;
 
         obstacleImage.sprite = obstaclesSprites[obstacle.CompareTag("Fire") ? 1 : 0];
 

@@ -2,19 +2,13 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO.Ports;
-using System.Runtime.InteropServices.ComTypes;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
-public class ControllerScript : MonoBehaviour
+public class ControlsSkip : MonoBehaviour
 {
+
     SerialPort stream = new SerialPort("COM6", 9600);
-
-    [SerializeField] GameObject iceParticles;
-    [SerializeField] GameObject fireParticles;
-
-    private ScoreManager scoreManager;
-
-    [SerializeField] GameObject obstacleMessage;
 
     public string strReceived;
     private string[] strData = new string[5];
@@ -26,14 +20,9 @@ public class ControllerScript : MonoBehaviour
 
     private double[] openAverage = new double[5];
 
-    private bool enteredVictory = false;
-    private bool enteredGun = false;
-
-
-
-    private void Start()
+    // Start is called before the first frame update
+    void Start()
     {
-        scoreManager = GetComponent<ScoreManager>();
         try
         {
             stream.Open();
@@ -49,6 +38,7 @@ public class ControllerScript : MonoBehaviour
         }
     }
 
+    // Update is called once per frame
     void Update()
     {
         if (stream.IsOpen)
@@ -63,35 +53,9 @@ public class ControllerScript : MonoBehaviour
                 Debug.Log($"We have a problem: {e.Message}");
             }
         }
-
-
-        if (Input.GetKeyDown(KeyCode.Keypad1))
+        if (Input.GetKeyDown(KeyCode.Return))
         {
-            DestroyObstacles("Ice");
-        }
-        else if (Input.GetKeyDown(KeyCode.Keypad2))
-        {
-            DestroyObstacles("Fire");
-        }
-    }
-
-    void DestroyObstacles(string tag)
-    {
-        try
-        {
-            GameObject obstacle = GameObject.FindGameObjectWithTag(tag);
-            GameObject particles = Instantiate(tag == "Fire" ? fireParticles : iceParticles, obstacle.transform.position, Quaternion.identity);
-
-            particles.GetComponent<ParticleSystem>().Play();
-            Destroy(particles, 2f);
-
-            scoreManager.IncreaseScore();
-            Destroy(obstacle);
-            obstacleMessage.SetActive(false);
-        }
-        catch
-        {
-            print($"No {tag} Obstacle Found");
+            SceneManager.LoadScene(3);
         }
     }
 
@@ -124,38 +88,11 @@ public class ControllerScript : MonoBehaviour
 
     void CheckHandGesture()
     {
-        if (!(isFingersClose[0] || isFingersClose[1] || isFingersClose[2] || isFingersClose[3] || isFingersClose[4]))
+        if (!isFingersClose[0] && isFingersClose[1] && isFingersClose[2] && isFingersClose[3] && isFingersClose[4])
         {
-            print("Open");
-            enteredVictory = false;
-            enteredGun = false;
+            print("Done");
+            SceneManager.LoadScene(3);
         }
-        else if (!(isFingersClose[1] || isFingersClose[2]) && isFingersClose[0] && isFingersClose[3] && isFingersClose[4])
-        {
-            print("Victory");
-            if (!enteredVictory)
-            {
-                enteredVictory = true;
-                DestroyObstacles("Ice");
-            }
-        }
-        else if (!(isFingersClose[0] || isFingersClose[1]) && isFingersClose[2] && isFingersClose[3] && isFingersClose[4])
-        {
-            print("Gun");
-            if (!enteredGun)
-            {
-                enteredGun = true;
-                DestroyObstacles("Fire");
-            }
-        }
-    }
 
-    void OnDestroy()
-    {
-        if (stream != null && stream.IsOpen)
-        {
-            stream.Close();
-        }
     }
-
 }
