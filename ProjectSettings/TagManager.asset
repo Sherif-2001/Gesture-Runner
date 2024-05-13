@@ -6,6 +6,9 @@ TagManager:
   tags:
   - Ice
   - Fire
+  - Cactus
+  - Ground
+  - Target
   layers:
   - Default
   - TransparentFX

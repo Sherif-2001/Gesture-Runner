@@ -6,7 +6,6 @@ public class ObstacleScript : MonoBehaviour
 {
     ParticleSystem particles;
 
-    // Start is called before the first frame update
     void Start()
     {
         particles = GameObject.Find($"{gameObject.tag} Particles").GetComponent<ParticleSystem>();

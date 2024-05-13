@@ -12,6 +12,11 @@ public class ScoreManager : MonoBehaviour
     [SerializeField] TextMeshProUGUI scoreText;
     int score = 0;
 
+    [SerializeField] TextMeshProUGUI yourScoreText;
+    [SerializeField] TextMeshProUGUI yourTimeText;
+
+    [SerializeField] GameObject GameOverPanel;
+
 
     /// <summary>
     /// Update the score as time passes
@@ -19,17 +24,17 @@ public class ScoreManager : MonoBehaviour
     void Update()
     {
         time += Time.deltaTime;
-        DisplayTime(time);
+        timeText.text = DisplayTime(time);
     }
 
-    void DisplayTime(float timeInSeconds)
+    string DisplayTime(float timeInSeconds)
     {
         TimeSpan timeSpan = TimeSpan.FromSeconds(timeInSeconds);
 
         // Format the TimeSpan as "mm:ss"
         string formattedTime = string.Format("{0:00}:{1:00}", timeSpan.Minutes, timeSpan.Seconds);
 
-        timeText.text = "Time\n" + formattedTime;
+        return "Time\n" + formattedTime;
 
     }
 
@@ -39,4 +44,14 @@ public class ScoreManager : MonoBehaviour
         scoreText.text = "Score\n" + score;
     }
 
+    /// <summary>
+    /// Save player score and max score
+    /// </summary>
+    public void SavePlayerScore()
+    {
+        GameOverPanel.SetActive(true);
+        Time.timeScale = 0;
+        yourScoreText.text = "Score\n" + score;
+        yourTimeText.text = DisplayTime(time);
+    }
 }

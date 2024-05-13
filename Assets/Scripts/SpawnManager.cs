@@ -34,7 +34,6 @@ public class SpawnManager : MonoBehaviour
         StartCoroutine(ShowObstacleWarning(randomObstacle));
 
         repeatRate *= 0.95f;
-        print(repeatRate);
         Invoke(nameof(SpawnObstacle), repeatRate);
     }
 
@@ -45,9 +44,29 @@ public class SpawnManager : MonoBehaviour
         TextMeshProUGUI obstacleText = obstacleMessage.GetComponentInChildren<TextMeshProUGUI>();
 
         obstacleText.text = $"{obstacle.name} Incoming".ToUpper();
-        obstacleText.color = obstacle.CompareTag("Fire") ? new Color(0.7433963f, 0.009818403f, 0.009818403f) : Color.blue;
+        switch (obstacle.tag)
+        {
+            case "Fire":
+                {
+                    obstacleText.color = new Color(0.7433963f, 0.009818403f, 0.009818403f);
+                    obstacleImage.sprite = obstaclesSprites[1];
+                    break;
+                }
 
-        obstacleImage.sprite = obstaclesSprites[obstacle.CompareTag("Fire") ? 1 : 0];
+            case "Ice":
+                {
+                    obstacleText.color = Color.blue;
+                    obstacleImage.sprite = obstaclesSprites[0];
+                    break;
+                }
+
+            case "Cactus":
+                {
+                    obstacleText.color = Color.green;
+                    obstacleImage.sprite = obstaclesSprites[2];
+                    break;
+                }
+        }
 
         yield return new WaitForSeconds(5);
 

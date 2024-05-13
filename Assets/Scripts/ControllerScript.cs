@@ -26,13 +26,19 @@ public class ControllerScript : MonoBehaviour
 
     private double[] openAverage = new double[5];
 
-    private bool enteredVictory = false;
-    private bool enteredGun = false;
+    private bool enteredVictoryJump = false;
+    private bool enteredFireGun = false;
+    private bool enteredWaterGun = false;
+
+
+    private PlayerScript playerScript;
 
 
 
     private void Start()
     {
+        playerScript = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerScript>();
+
         scoreManager = GetComponent<ScoreManager>();
         try
         {
@@ -73,6 +79,11 @@ public class ControllerScript : MonoBehaviour
         {
             DestroyObstacles("Fire");
         }
+        else if (Input.GetKeyDown(KeyCode.Keypad3))
+        {
+            playerScript.Jump();
+
+        }
     }
 
     void DestroyObstacles(string tag)
@@ -80,7 +91,20 @@ public class ControllerScript : MonoBehaviour
         try
         {
             GameObject obstacle = GameObject.FindGameObjectWithTag(tag);
-            GameObject particles = Instantiate(tag == "Fire" ? fireParticles : iceParticles, obstacle.transform.position, Quaternion.identity);
+            GameObject particles = null;
+
+            if (tag == "Fire")
+            {
+                particles = Instantiate(fireParticles, obstacle.transform.position, Quaternion.identity);
+            }
+            else if (tag == "Ice")
+            {
+                particles = Instantiate(iceParticles, obstacle.transform.position, Quaternion.identity);
+            }
+            else
+            {
+                return;
+            }
 
             particles.GetComponent<ParticleSystem>().Play();
             Destroy(particles, 2f);
@@ -124,31 +148,46 @@ public class ControllerScript : MonoBehaviour
 
     void CheckHandGesture()
     {
+        // Open hand
         if (!(isFingersClose[0] || isFingersClose[1] || isFingersClose[2] || isFingersClose[3] || isFingersClose[4]))
         {
             print("Open");
-            enteredVictory = false;
-            enteredGun = false;
+            enteredVictoryJump = false;
+            enteredFireGun = false;
+            enteredWaterGun = false;
         }
+        // Victory Gesture
         else if (!(isFingersClose[1] || isFingersClose[2]) && isFingersClose[0] && isFingersClose[3] && isFingersClose[4])
         {
-            print("Victory");
-            if (!enteredVictory)
+            print("Victory Jump");
+            if (!enteredVictoryJump)
             {
-                enteredVictory = true;
-                DestroyObstacles("Ice");
+                enteredVictoryJump = true;
+                playerScript.Jump();
             }
         }
+        // Gun 1 Finger Gesture
         else if (!(isFingersClose[0] || isFingersClose[1]) && isFingersClose[2] && isFingersClose[3] && isFingersClose[4])
         {
-            print("Gun");
-            if (!enteredGun)
+            print("Water Gun");
+            if (!enteredWaterGun)
             {
-                enteredGun = true;
+                enteredWaterGun = true;
                 DestroyObstacles("Fire");
             }
         }
+        // Gun 2 Fingers Gesture
+        else if (!(isFingersClose[0] || isFingersClose[1] || isFingersClose[2]) && isFingersClose[3] && isFingersClose[4])
+        {
+            print("Fire Gun");
+            if (!enteredFireGun)
+            {
+                enteredFireGun = true;
+                DestroyObstacles("Ice");
+            }
+        }
     }
+
 
     void OnDestroy()
     {
@@ -156,6 +195,7 @@ public class ControllerScript : MonoBehaviour
         {
             stream.Close();
         }
+
     }
 
 }
