@@ -40,7 +40,7 @@ public class ScoreManager : MonoBehaviour
 
     public void IncreaseScore()
     {
-        score += 5;
+        score += 1;
         scoreText.text = "Score\n" + score;
     }
 

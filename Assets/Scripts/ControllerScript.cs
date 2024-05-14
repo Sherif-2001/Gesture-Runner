@@ -177,9 +177,9 @@ public class ControllerScript : MonoBehaviour
             }
         }
         // Gun 2 Fingers Gesture
-        else if (!(isFingersClose[0] || isFingersClose[1] || isFingersClose[2]) && isFingersClose[3] && isFingersClose[4])
+        else if (!isFingersClose[0] && isFingersClose[1] && isFingersClose[2] && isFingersClose[3] && !isFingersClose[4])
         {
-            print("Fire Gun");
+            print("Rock Fire Gun");
             if (!enteredFireGun)
             {
                 enteredFireGun = true;

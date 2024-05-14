@@ -2047,7 +2047,7 @@ MonoBehaviour:
   obstacleImage: {fileID: 1555880034}
   obstacleMessage: {fileID: 175693770}
   obstaclesSprites:
-  - {fileID: 21300000, guid: c8c74271c264fa64481ced9d5d9dc1d9, type: 3}
+  - {fileID: 21300000, guid: cb9f25f162541144e965cd42b7e66d67, type: 3}
   - {fileID: 21300000, guid: 7b015d1af71794941b0150e2a6b01f59, type: 3}
   - {fileID: 21300000, guid: ebced284c3cb5794dad70872108dfcea, type: 3}
 --- !u!114 &939804396

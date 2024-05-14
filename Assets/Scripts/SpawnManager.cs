@@ -33,7 +33,11 @@ public class SpawnManager : MonoBehaviour
         Instantiate(randomObstacle);
         StartCoroutine(ShowObstacleWarning(randomObstacle));
 
-        repeatRate *= 0.95f;
+        if (repeatRate > 5f)
+        {
+            repeatRate *= 0.95f;
+
+        }
         Invoke(nameof(SpawnObstacle), repeatRate);
     }
 
