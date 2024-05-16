@@ -36,7 +36,7 @@ Gesture Runner is designed to make the process of hand rehabilitation more enjoy
 
 1. **Clone the Repository**:
    ```bash
-   git clone https://github.com/yourusername/gesture-runner.git
+   git clone https://github.com/Sherif-2001/Gesture-Runner
    cd gesture-runner
 2. **Unity Setup**:
 
