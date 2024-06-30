@@ -14,8 +14,6 @@ Welcome to Gesture Runner! This project is a 2D endless runner game developed us
 - [Calibration](#calibration)
 - [Gameplay Mechanics](#gameplay-mechanics)
 - [Development](#development)
-- [Contributing](#contributing)
-- [License](#license)
 
 ## Introduction
 
